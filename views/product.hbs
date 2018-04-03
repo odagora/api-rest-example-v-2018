@@ -1,0 +1,31 @@
+<script type="text/javascript">
+  let productList = document.createElement('ul')
+
+  //Se utiliza el objeto Headers del api de javascript y se le agrega el token guardado en el localStorage para que viaje en la cabecera
+  const myHeaders = new Headers();
+  myHeaders.append('authorization', `Bearer ${localStorage.token}`)
+
+  //Se utiliza la api de fetch que recoge la informacion de la url donde nos mostraba los productos. Esta api reemplaza el XMLHttpRequest de versiones pasadas de javascript
+  fetch('/api/product', {
+    method: 'GET',
+    //Es necesario enviar las cabeceras definidas en la parte de arriba
+    headers: myHeaders
+  })
+  //Va a recibir una promesa con una respuesta que debe estar en formato json
+  .then(res => res.json())
+  //Luego otra promesa con los datos
+	//Para mostrarlo en la consola del navegador:
+	// .then(data => console.log(data))
+
+  //Para mostrarlo en el navegador se podria utilizar frameworks o librerias tales como react, polymer, angular, etc, pero se opta por hacer uso del api javascript del navegador:
+  .then(data => {
+    data.products.map(product => {
+      let text = document.createTextNode(product.name)
+      let elem = document.createElement('li')
+      elem.appendChild(text)
+      productList.appendChild(elem)
+    })
+
+    document.body.appendChild(productList)
+  })
+</script>

@@ -1,0 +1,35 @@
+<form id="login" method="POST">
+	<input type="email" name="email" value="" placeholder="Tu Email">
+	<br><br>
+	<input type="password" name="password" value="" placeholder="Tu Contraseña">
+	<br><br>
+	<input type="submit" value="Login">
+</form>
+
+<!-- Para poderse loguear via ajax se utiliza ECMAScript 6 con el api de fetch -->
+<script type="text/javascript">
+	const formLogin = document.querySelector('#login')
+	//Se utiliza un objeto del api de js para navegador que se llama FormData. De esta forma se va a crear un objeto con todos los campos de tipo "input" que se puede utilizar para enviar los datos
+	const formData = new FormData(formLogin)
+
+	//Se agrega un evento que escuche la accion de "submit"
+	formLogin.addEventListener('submit', event => {
+		//Se agrega un evento que prevenga que el comportamiento por defecto sea recargar la pagina, sino que se quede ahi
+		event.preventDefault()
+		//Se llama el metodo fetch y se le pasa el objeto creado anteriormente, especificando que es de tipo "POST" ya que por defecto el api de fetch envia tipo "GET"
+		fetch('/api/signin', {
+			method: 'POST',
+			body: formData
+		})
+		//Se obtiene una promesa que debe estar en tipo json
+		.then(res => res.json())
+		//Luego otra promesa con los datos
+		//Para mostrarlo en la consola del navegador:
+		// .then(data => console.log(data))
+
+		.then(data => {
+			//Salvamos el token que se encuentra en data.token para agregarlo en la cabecera de las peticiones a manera de autenticacion
+			localStorage.setItem('token', data.token)
+		})
+	})
+</script>
