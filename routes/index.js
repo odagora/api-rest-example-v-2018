@@ -10,9 +10,9 @@ const api = express.Router()
 
 //Rutas para nuestro API REST - CRUD
 //Para devolver todos los productos existentes
-api.get('/product', ProductCtrl.getProducts)
+api.get('/product', auth, ProductCtrl.getProducts)
 //Para devolver un producto según su id
-api.get('/product/:productId', ProductCtrl.getProduct)
+api.get('/product/:productId', auth, ProductCtrl.getProduct)
 api.post('/product', auth, ProductCtrl.saveProduct)
 api.put('/product/:productId', auth, ProductCtrl.updateProduct)
 api.delete('/product/:productId', auth, ProductCtrl.deleteProduct)
