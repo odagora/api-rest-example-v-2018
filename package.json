@@ -4,7 +4,7 @@
   "description": "Proyecto API RESTful con node.js y express\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[E",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Gonzalez",
